@@ -1,0 +1,150 @@
+.homepage-container {
+    background: linear-gradient(90deg, pink, aqua, pink);
+    text-align: center;
+    padding: 20px; 
+    height: auto;
+  }
+  
+  .button-list {
+    list-style-type: none;
+    padding: 0; 
+  }
+  
+  .button-list li {
+    display: inline-block; 
+    margin: 0 10px; 
+  }
+  
+  .homepage-button {
+    background-color: #4CAF50; 
+    color: white; 
+    padding: 10px 20px; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    font-size: 16px; 
+    transition: background-color 0.3s;
+  }
+  
+  .homepage-button:hover {
+    background-color: #45a049;
+  }
+body {
+    font-family: cursive;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(255, 0, 140);
+}
+
+h1 {
+    text-align: center;
+    padding: 20px;
+    background-color: white;
+}
+
+h2 {
+    background-color: white;
+}
+
+section {
+    margin: 10px 0;
+    width: 100%; 
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin: 5px 0;
+}
+
+input, textarea {
+    width: calc(100% - 16px); 
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: red;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    background-color: aqua;
+}
+
+th {
+    background-color: purple;
+}
+
+.wrapper {
+    position: relative;
+    width: 500px; /* Adjust if needed */
+    background-color: transparent;
+    border: 2px solid;
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    justify-content: center;
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-start; 
+    padding: 20px; 
+}
+
+ul {
+    list-style-type: none;
+    overflow: hidden;
+    background-color: black;
+}
+
+li {
+    float: right;
+}
+
+li a {
+    display: flex;
+    padding: 8px;
+    font-family: cursive;
+    color: white;
+    font-size: 16px;
+}
+
+li a:hover {
+    background-color: black;
+}
+
+h2 {
+    font-family: cursive;
+    text-align: center;
+}
+
+body {
+    background-color: white;
+}
