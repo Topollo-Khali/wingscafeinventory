@@ -1,54 +1,60 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate, Link } from 'react-router-dom';
 import './styles.css';
 import Login from './Login';
 import UserManagement from './UserManagement';
 import ProductManagement from './ProductManagement';
-import Dashboard from './Dashboard'; 
+import Dashboard from './Dashboard';
 
-function HomePage() {
-  const [currentPage, setCurrentPage] = useState('home');
+function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const renderPage = () => {
-    switch (currentPage) {
-      case 'login':
-        return <UserManagement />;
-      case 'userManagement':
-        return <Login />;
-      case 'productManagement':
-        return <ProductManagement />;
-      case 'dashboard':
-        return <Dashboard />;
-      default:
-        return (
-          <div>
-            <div>
-          <div className="homepage-container">
-            <h2>Welcome to Wings Cafe</h2>
+  return (
+    <Router>
+      <div className="app-container">
+        {/* Show login page if not authenticated, else show navigation and routes */}
+        {!isAuthenticated ? (
+          <Routes>
+            <Route path="/" element={<Login onLogin={() => setIsAuthenticated(true)} />} />
+            {/* Redirect all paths to login if not authenticated */}
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        ) : (
+          <>
+            {/* Display navigation after login */}
             <nav>
+              <h2>Welcome to Wings Cafe</h2>
               <ul className="button-list">
                 <li>
-                  <button className="homepage-button" onClick={() => setCurrentPage('userManagement')}>User Management</button>
+                  <Link to="/userManagement">
+                    <button className="app-button">User Management</button>
+                  </Link>
                 </li>
                 <li>
-                  <button className="homepage-button" onClick={() => setCurrentPage('productManagement')}>Product Management</button>
+                  <Link to="/productManagement">
+                    <button className="app-button">Product Management</button>
+                  </Link>
                 </li>
                 <li>
-                  <button className="homepage-button" onClick={() => setCurrentPage('dashboard')}>Dashboard</button>
+                  <Link to="/dashboard">
+                    <button className="app-button">Dashboard</button>
+                  </Link>
                 </li>
               </ul>
             </nav>
-          </div>
-          </div>
-          </div>
-        );
-    }
-  };
-
-  return (
-    <div>
-      {renderPage()}
-    </div>
+            {/* Routes for authenticated content */}
+            <Routes>
+              <Route path="/userManagement" element={<UserManagement />} />
+              <Route path="/productManagement" element={<ProductManagement />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              {/* Redirect to User Management or any default page after login */}
+              <Route path="*" element={<Navigate to="/userManagement" />} />
+            </Routes>
+          </>
+        )}
+      </div>
+    </Router>
   );
 }
 
-export default HomePage;
+export default App;

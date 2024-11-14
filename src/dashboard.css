@@ -1,0 +1,36 @@
+/* dashboard.css */
+
+.dashboard-container {
+  padding: 20px;
+  text-align: center;  /* Center the content */
+}
+
+.chart-container {
+  height: 400px; /* Fixed height for the chart */
+  width: 100%; /* Full width of the container */
+  margin: 20px 0; /* Spacing above and below the chart */
+}
+
+.image-container {
+  display: flex;
+  justify-content: center; /* Center images horizontally */
+  align-items: center; /* Center images vertically */
+}
+
+.rotating-image {
+  width: 100px; /* Fixed width for images */
+  height: 100px; /* Fixed height for images */
+  margin: 0 10px; /* Space between images */
+  border-radius: 10%; /* Rounded corners for images */
+  animation: rotate 6s linear infinite; /* Animation for rotating effect */
+}
+
+/* Keyframes for rotating effect */
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,50 +1,97 @@
 import React, { useState } from 'react';
-// import './styles.css';
-import UserManagement from './UserManagement'; // Import UserManagement component
+import './styles.css';
+import { addUser, logUser } from './Api';
 
-function Login() {
-  const [managername, setManagername] = useState('');
+function Login({ onLogin }) {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [isSignUp, setIsSignUp] = useState(false); // Toggle between login and sign-up
 
-  const handleLogin = (e) => {
+  // Handle login submission
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    // Direct login logic
-    setIsLoggedIn(true); // Assume successful login
+    try {
+      const response = await logUser(username, password);
+      if (response.message === 'Login successful') {
+        onLogin(); // Proceed if login is successful
+      }
+    } catch (error) {
+      alert('Invalid username or password');
+    }
+  };
+
+  // Handle sign-up submission
+  const handleSignUpSubmit = async (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+
+    try {
+      const response = await addUser({ username, email, password });
+      if (response) {
+        alert('Sign-up successful! You can now log in.');
+        setIsSignUp(false); // Switch back to login view
+      }
+    } catch (error) {
+      alert('Sign-up failed. Username or email might already exist.');
+    }
   };
 
   return (
-    <div className="wrapper">
-      {!isLoggedIn ? (
-        <div>
-          <h2>Manager</h2>
-          <form onSubmit={handleLogin}>
-            <label htmlFor="managername">Manager Name:</label>
+    <div className="login-container">
+      <form onSubmit={isSignUp ? handleSignUpSubmit : handleLoginSubmit}>
+        <div className="wrapper">
+          <h2>{isSignUp ? 'Sign Up' : 'Login'}</h2>
+          <div>
+            <label>Username:</label>
             <input
               type="text"
-              id="managername"
-              placeholder="Manager Name..."
-              value={managername}
-              onChange={(e) => setManagername(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               required
-            /><br />
-
-            <label htmlFor="password">Password:</label>
+            />
+          </div>
+          {isSignUp && (
+            <div>
+              <label>Email:</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+          )}
+          <div>
+            <label>Password:</label>
             <input
               type="password"
-              id="password"
-              placeholder="Password..."
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-            /><br />
-
-            <button type="submit">Login</button>
-          </form>
+            />
+          </div>
+          {isSignUp && (
+            <div>
+              <label>Confirm Password:</label>
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+            </div>
+          )}
+          <button type="submit">{isSignUp ? 'Sign Up' : 'Login'}</button>
+          <p onClick={() => setIsSignUp(!isSignUp)} className="toggle">
+            {isSignUp ? 'Already have an account? Log in' : "Don't have an account? Sign up"}
+          </p>
         </div>
-      ) : (
-        <UserManagement /> 
-      )}
+      </form>
     </div>
   );
 }
